@@ -40,7 +40,7 @@ int main()
     {
         for (int b = -11; b < 11; b++) 
         {
-            auto choose_mat = random_float();
+            const auto choose_mat = random_float();
             point3 center(a + 0.9f * random_float(), 0.2f, b + 0.9f * random_float());
 
             if ((center - point3(4.0f, 0.2f, 0.0f)).length() > 0.9f) {
@@ -51,7 +51,7 @@ int main()
                     // diffuse
                     auto albedo = colour::random() * colour::random();
                     sphere_material = make_shared<lambertian>(albedo);
-                    world.add(make_shared<sphere>(center, 0.2, sphere_material));
+                    world.add(make_shared<sphere>(center, 0.2f, sphere_material));
                 }
                 else if (choose_mat < 0.95f) 
                 {

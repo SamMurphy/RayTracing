@@ -1,10 +1,10 @@
 #pragma once
-#include "utilities.h"
 #include "colour.h"
 #include "hittable.h"
+#include "utilities.h"
 
 #define DEFAULT_IMAGE_WIDTH 1200
-#define DEFAULT_ASPECT_RATIO 16.0f / 9.0f
+#define DEFAULT_ASPECT_RATIO (16.0f / 9.0f)
 #define DEFAULT_CHANNELS 3
 #define SKY_COLOUR colour(0.5f, 0.7f, 1.0f)
 #define LAMBERT_REFLECTIONS 1
@@ -21,11 +21,11 @@ public:
 private:
 	void initialize();
 
-	colour ray_colour(const Ray& r, int depth, const hittable& world) const;
+	colour ray_colour(const ray& r, int depth, const hittable& world) const;
 
-	colour sky_box(const Ray& r) const;
+	colour sky_box(const ray& r) const;
 
-	Ray get_ray(int x, int y) const;
+	ray get_ray(int x, int y) const;
 	vec3 pixel_sample_square() const;
 
 	point3 defocus_disk_sample() const;

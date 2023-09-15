@@ -1,15 +1,17 @@
 #include "vec3.h"
+
 #include "utilities.h"
 
 vec3 vec3::random()
 {
-	return vec3(random_float(), random_float(), random_float());
+	return { random_float(), random_float(), random_float()};
 }
 
-vec3 vec3::random(float min, float max)
+vec3 vec3::random(const float min, const float max)
 {
-	return vec3(
+	return {
 		random_float(min, max),
 		random_float(min, max),
-		random_float(min, max));
+		random_float(min, max)
+	};
 }

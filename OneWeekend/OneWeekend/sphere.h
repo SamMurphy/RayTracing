@@ -5,10 +5,10 @@
 class sphere : public hittable
 {
 public:
-	sphere(point3 _centre, float _radius, shared_ptr<material> _material) 
+	sphere(const point3 _centre, const float _radius, const shared_ptr<material>& _material) 
 		: centre(_centre), radius(_radius), mat(_material) {}
 
-	bool hit(const Ray& r, interval ray_t, hit_record& rec) const override;
+	bool hit(const ray& r, interval ray_t, hit_record& rec) const override;
 
 private:
 	point3 centre;

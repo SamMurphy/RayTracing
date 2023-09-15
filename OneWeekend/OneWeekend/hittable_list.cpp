@@ -1,7 +1,8 @@
 #include "hittable_list.h"
+
 #include "interval.h"
 
-bool hittable_list::hit(const Ray& r, interval ray_t, hit_record& rec) const
+bool hittable_list::hit(const ray& r, interval ray_t, hit_record& rec) const
 {
     hit_record temp_rec;
     bool hit_anything = false;

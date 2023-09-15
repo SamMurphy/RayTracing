@@ -14,7 +14,7 @@ using std::sqrt;
 // Constants
 
 const float infinity = std::numeric_limits<float>::infinity();
-const float pi = 3.1415926535897932385f;
+constexpr float pi = 3.1415926535897932385f;
 
 // Utility functions
 
@@ -25,10 +25,10 @@ inline float degrees_to_radians(float degrees)
 
 inline float random_float()
 {
-	return rand() / (RAND_MAX + 1.0f);
+	return static_cast<float>(rand()) / (RAND_MAX + 1.0f);
 }
 
-inline float random_float(float min, float max)
+inline float random_float(const float min, const float max)
 {
 	return min + (max-min) * random_float();
 }

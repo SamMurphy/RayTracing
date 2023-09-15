@@ -1,8 +1,8 @@
 #pragma once
 
-#include "vec3.h"
-#include "interval.h"
 #include <iostream>
+#include "interval.h"
+#include "vec3.h"
 
 using colour = vec3;
 
@@ -13,7 +13,7 @@ inline float linear_to_gamma(float linear_component)
 
 inline int convert_colour(float colour, int samples_per_pixel = 1)
 {
-	float scale = 1.0f / samples_per_pixel;
+	const float scale = 1.0f / static_cast<float>(samples_per_pixel);
 	static const interval intensity(0.0f, 0.999f);
 
 	colour = colour * scale;
@@ -26,7 +26,7 @@ inline int convert_colour(float colour, int samples_per_pixel = 1)
 
 inline colour convert_colour(colour pixel_colour, int samples_per_pixel = 1)
 {
-	colour out(
+	const colour out(
 		static_cast<float>(convert_colour(pixel_colour.R(), samples_per_pixel)),
 		static_cast<float>(convert_colour(pixel_colour.G(), samples_per_pixel)),
 		static_cast<float>(convert_colour(pixel_colour.B(), samples_per_pixel)));

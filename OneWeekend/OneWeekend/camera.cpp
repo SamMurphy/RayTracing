@@ -1,9 +1,12 @@
 #include "camera.h"
-#include "material.h"
-#include "interval.h"
-#include "stb/stb_image_write.h"
+
 #include <shlobj.h>
 #include <shellapi.h>
+
+
+#include "interval.h"
+#include "material.h"
+#include "stb/stb_image_write.h"
 
 
 void camera::initialize()
@@ -65,7 +68,7 @@ void camera::render(const hittable& world)
     initialize(); // re-init the camera in case anything has changed.
 
     // Render Loop
-    uint8_t* pixels = new uint8_t[image_width * image_height * channels];
+    const auto pixels = new uint8_t[image_width * image_height * channels];
     int index = 0;
     for (int y = 0; y < image_height; ++y)
     {
@@ -75,7 +78,7 @@ void camera::render(const hittable& world)
             colour pixel_colour(0, 0, 0);
             for (int sample = 0; sample < samples_per_pixel; ++sample)
             {
-                Ray r = get_ray(x, y);
+                ray r = get_ray(x, y);
                 pixel_colour += ray_colour(r, max_depth, world);
             }
 
@@ -94,7 +97,7 @@ void camera::render(const hittable& world)
     ShellExecute(0, 0, L"output.png", 0, 0, SW_SHOW);
 }
 
-colour camera::ray_colour(const Ray& r, int depth, const hittable& world) const
+colour camera::ray_colour(const ray& r, int depth, const hittable& world) const
 {
     // If exceeded the bound limit, gather no more light
     if (depth <= 0)
@@ -108,7 +111,7 @@ colour camera::ray_colour(const Ray& r, int depth, const hittable& world) const
         colour colourized_normal = 0.5f * (hit.normal + 1.0f);
         return colourized_normal;
 #endif
-        Ray scattered;
+        ray scattered;
         colour attenuation;
         if (hit.mat->scatter(r, hit, attenuation, scattered))
         {
@@ -120,14 +123,14 @@ colour camera::ray_colour(const Ray& r, int depth, const hittable& world) const
     return sky_box(r);
 }
 
-colour camera::sky_box(const Ray& r) const
+colour camera::sky_box(const ray& r) const
 {
-    vec3 unit_direction = unit_vector(r.Direction());
+    vec3 unit_direction = unit_vector(r.direction());
     float a = 0.5f * (unit_direction.Y() + 1.0f);
     return (1.0f - a) * colour(1.0f, 1.0f, 1.0f) + a * SKY_COLOUR;
 }
 
-Ray camera::get_ray(int x, int y) const
+ray camera::get_ray(int x, int y) const
 {
     // Get a randomly sampled camera ray for the pixel at location x,y originating from the camera defocus disk.
 
@@ -139,7 +142,7 @@ Ray camera::get_ray(int x, int y) const
     point3 ray_origin = (defocus_angle <= 0) ? camera_centre : defocus_disk_sample();
     vec3 ray_direction = pixel_sample - ray_origin;
 
-    return Ray(ray_origin, ray_direction);
+    return ray(ray_origin, ray_direction);
 }
 
 vec3 camera::pixel_sample_square() const

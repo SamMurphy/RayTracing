@@ -8,19 +8,19 @@ public:
 
 	interval() : min(+infinity), max(-infinity) {} // Default interval is empty
 
-	interval(float _min, float _max) : min(_min), max(_max) {}
+	interval(const float _min, const float _max) : min(_min), max(_max) {}
 
-	bool contains(float x) const
+	bool contains(const float x) const
 	{
 		return min <= x && x <= max;
 	}
 
-	bool surrounds(float x) const
+	bool surrounds(const float x) const
 	{
 		return min < x && x < max;
 	}
 
-	float clamp(float x) const
+	float clamp(const float x) const
 	{
 		if (x < min) return min;
 		if (x > max) return max;
